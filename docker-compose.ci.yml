@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    image: fossapps/micro.appregistration
+    image: fossapps/micro.appregistration:$TAG
     ports:
       - 5000:5000
     environment:
