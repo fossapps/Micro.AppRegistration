@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Micro.AppRegistration.Api.Controllers
+namespace Micro.AppRegistration.Api.CreateApplication
 {
     [ApiController]
     [Route("api/[controller]")]

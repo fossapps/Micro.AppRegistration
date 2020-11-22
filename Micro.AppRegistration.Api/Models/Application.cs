@@ -5,6 +5,7 @@ namespace Micro.AppRegistration.Api.Models
     public class Application
     {
         public string Id { set; get; }
+        public string Name { set; get; }
         public string User { set; get; }
         public string Secret { set; get; }
         public string ShortCode { set; get; }
