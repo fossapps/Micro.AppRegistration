@@ -24,7 +24,7 @@ namespace Micro.AppRegistration.Api
         {
             services.AddConfiguration(Configuration);
             services.AddMetrics();
-            services.ConfigureRequiredDependencies();
+            services.ConfigureRequiredDependencies(Configuration);
             services.ConfigureHealthChecks();
             services.AddControllers();
             services.ConfigureSwagger();
