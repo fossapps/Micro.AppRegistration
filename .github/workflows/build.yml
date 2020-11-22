@@ -3,8 +3,8 @@ name: Build
 on: [push]
 
 env:
-  SERVICE_NAME: micro.starter
-  SERVICE_NAME_CAPITALIZED: Micro.Starter
+  SERVICE_NAME: micro.appregistration
+  SERVICE_NAME_CAPITALIZED: Micro.Registration
 jobs:
   build:
     runs-on: ubuntu-latest

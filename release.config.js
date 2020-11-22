@@ -1,4 +1,4 @@
-const serviceName = 'auth'
+const serviceName = 'appregistration'
 
 class SemanticReleaseError extends Error {
     constructor(message, code, details) {
