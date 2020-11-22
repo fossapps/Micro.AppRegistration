@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.AppRegistration", "Micro.AppRegistration\Micro.AppRegistration.csproj", "{D782549D-B539-4DA3-B718-D8697EABE4F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.AppRegistration.Api", "Micro.AppRegistration.Api\Micro.AppRegistration.Api.csproj", "{D782549D-B539-4DA3-B718-D8697EABE4F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Micro.AppRegistration.UnitTest", "Micro.AppRegistration.UnitTest\Micro.AppRegistration.UnitTest.csproj", "{4384EF12-1CE6-4672-BC61-2F20F83D2744}"
 EndProject
