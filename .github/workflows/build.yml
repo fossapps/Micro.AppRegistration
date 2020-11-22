@@ -4,7 +4,7 @@ on: [push]
 
 env:
   SERVICE_NAME: micro.appregistration
-  SERVICE_NAME_CAPITALIZED: Micro.Registration
+  SERVICE_NAME_CAPITALIZED: Micro.AppRegistration
 jobs:
   build:
     runs-on: ubuntu-latest

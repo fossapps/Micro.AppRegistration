@@ -8,7 +8,7 @@ namespace Micro.AppRegistration.Api.Models
     public class ApplicationContext : DbContext
     {
         private readonly DatabaseConfig _db;
-        public DbSet<Weather> Weathers { set; get; }
+        public DbSet<Application> Applications { set; get; }
 
         public ApplicationContext(DbContextOptions options, IOptions<DatabaseConfig> dbOption) : base(options)
         {
