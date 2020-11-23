@@ -10,6 +10,7 @@ namespace Micro.AppRegistration.Api.StartupExtensions
         {
             services.Configure<DatabaseConfig>(configuration.GetSection("DatabaseConfig"));
             services.Configure<SlackLoggingConfig>(configuration.GetSection("Logging").GetSection("Slack"));
+            services.Configure<Services>(configuration.GetSection("Services"));
         }
     }
 }
