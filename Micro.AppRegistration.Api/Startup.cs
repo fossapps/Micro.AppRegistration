@@ -29,6 +29,7 @@ namespace Micro.AppRegistration.Api
             services.AddControllers();
             services.ConfigureSwagger();
             services.RegisterWorker();
+            services.ConfigureIdentityServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +41,7 @@ namespace Micro.AppRegistration.Api
                 app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.AddSwaggerWithUi();
             app.UseEndpoints(endpoints =>

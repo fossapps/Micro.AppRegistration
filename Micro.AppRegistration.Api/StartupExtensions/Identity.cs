@@ -19,7 +19,10 @@ namespace Micro.AppRegistration.Api.StartupExtensions
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer();
+            }).AddJwtBearer(config =>
+            {
+                ConfigureJwtBearer(serviceCollection, config);
+            });
         }
 
         private static void ConfigureJwtBearer(IServiceCollection services, JwtBearerOptions config)

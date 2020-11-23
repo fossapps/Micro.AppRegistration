@@ -2,8 +2,10 @@ using System;
 using Fossapps.Micro.KeyStore;
 using Micro.AppRegistration.Api.Auth;
 using Micro.AppRegistration.Api.Configs;
+using Micro.AppRegistration.Api.CreateApplication;
 using Micro.AppRegistration.Api.Models;
 using Micro.AppRegistration.Api.Uuid;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +18,9 @@ namespace Micro.AppRegistration.Api.StartupExtensions
             services.AddDbContext<ApplicationContext>();
             services.AddSingleton<IUuidService, UuidService>();
             services.AddSingleton<IKeyResolver, KeyResolver>();
+            services.AddScoped<IAppRegistrationService, AppRegistrationService>();
+            services.AddScoped<ICreateApplicationRepository, CreateApplicationRepository>();
+            services.AddSingleton<IPasswordHasher<Application>, PasswordHasher<Application>>();
             services.AddSingleton(SetupKeyStoreHttpClient(configuration.GetSection("Services").Get<Services>().KeyStore));
         }
 
