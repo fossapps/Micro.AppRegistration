@@ -20,7 +20,7 @@ namespace Micro.AppRegistration.Api.CreateApplication
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Test(CreateApplicationRequest request)
+        public async Task<IActionResult> CreateApplication(CreateApplicationRequest request)
         {
             try
             {
