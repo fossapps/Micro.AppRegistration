@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Micro.AppRegistration.Api.Models;
 using Micro.AppRegistration.Api.UserDataExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +21,8 @@ namespace Micro.AppRegistration.Api.CreateApplication
 
         [HttpPost]
         [Authorize]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(Application), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateApplication(CreateApplicationRequest request)
         {
             try

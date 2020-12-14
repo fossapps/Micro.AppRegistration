@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Micro.AppRegistration.Api.Models;
 using Micro.AppRegistration.Api.UserDataExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +22,8 @@ namespace Micro.AppRegistration.Api.ListApplications
 
         [Authorize]
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ApplicationResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ListApplications()
         {
             try
@@ -37,6 +41,9 @@ namespace Micro.AppRegistration.Api.ListApplications
 
         [Authorize]
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ApplicationResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetApplication(string id)
         {
             try

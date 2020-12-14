@@ -20,6 +20,9 @@ namespace Micro.AppRegistration.Api.VerifySecret
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(VerifySecretResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Verify([FromHeader(Name = "Authorization")] [Required] [StartsWith("Basic ")]
             string authorization)
         {
