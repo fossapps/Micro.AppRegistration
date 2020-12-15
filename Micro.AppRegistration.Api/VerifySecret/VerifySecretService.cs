@@ -7,7 +7,7 @@ namespace Micro.AppRegistration.Api.VerifySecret
 {
     public interface IVerifySecretService
     {
-        Task<bool> Verify(string appId, string secret);
+        Task<VerifySecretResponse> Verify(string appId, string secret);
     }
     public class VerifySecretService : IVerifySecretService
     {
@@ -20,13 +20,21 @@ namespace Micro.AppRegistration.Api.VerifySecret
             _applicationRepository = applicationRepository;
         }
 
-        public async Task<bool> Verify(string appId, string secret)
+        public async Task<VerifySecretResponse> Verify(string appId, string secret)
         {
             var application = await _applicationRepository.FindById(appId);
             var result = _secretHasher.VerifyHashedPassword(null, application.Secret, secret);
             // todo: if result returns a rehash needed, we need re-hash password and save it in database.
             // to be done after MVP
-            return result == PasswordVerificationResult.Success || result == PasswordVerificationResult.SuccessRehashNeeded;
+            var success = result == PasswordVerificationResult.Success || result == PasswordVerificationResult.SuccessRehashNeeded;
+            return new VerifySecretResponse
+            {
+                Success = success,
+                Approved = application.Approved,
+                Owner = application.User,
+                ShortCode = application.ShortCode,
+                UseDefaultShortCode = application.UseDefaultCode
+            };
         }
     }
 }
