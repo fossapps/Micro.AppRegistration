@@ -30,10 +30,7 @@ namespace Micro.AppRegistration.Api.VerifySecret
             {
                 var (appId, secret) = GetBasicAuthData(authorization);
                 var result = await _verifySecretService.Verify(appId, secret);
-                return Ok(new VerifySecretResponse
-                {
-                    Success = result
-                });
+                return Ok(result);
             }
             catch (BadBasicAuthorizationDataException e)
             {
