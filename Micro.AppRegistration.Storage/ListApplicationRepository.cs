@@ -7,8 +7,8 @@ namespace Micro.AppRegistration.Storage
 {
     public interface IListApplicationRepository
     {
-        public Task<IEnumerable<Application>> ListApplicationsByOwner(string ownerId);
-        public Task<Application> FindById(string id);
+        public Task<IEnumerable<Application>> ListApplicationsByOwners(IEnumerable<string> ownerIds);
+        public Task<IEnumerable<Application>> FindByIds(IEnumerable<string> ids);
     }
 
     public class ListApplicationRepository : IListApplicationRepository
@@ -20,20 +20,14 @@ namespace Micro.AppRegistration.Storage
             _db = db;
         }
 
-        public async Task<IEnumerable<Application>> ListApplicationsByOwner(string ownerId)
+        public async Task<IEnumerable<Application>> ListApplicationsByOwners(IEnumerable<string> ownerIds)
         {
-            return (await _db.Applications.AsNoTracking().Where(x => x.User == ownerId).ToListAsync()).Select(RemoveSecret);
+            return await _db.Applications.AsNoTracking().Where(x => ownerIds.Contains(x.User)).ToListAsync();
         }
 
-        public async Task<Application> FindById(string id)
+        public async Task<IEnumerable<Application>> FindByIds(IEnumerable<string> ids)
         {
-            return RemoveSecret(await _db.Applications.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id));
-        }
-
-        private static Application RemoveSecret(Application application)
-        {
-            application.Secret = null;
-            return application;
+            return await _db.Applications.AsNoTracking().Where(x => ids.Contains(x.Id)).ToListAsync();
         }
     }
 }

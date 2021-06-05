@@ -7,6 +7,7 @@ using GraphQL.Server.Ui.Playground;
 using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using Micro.AppRegistration.Api.GraphQL;
+using Micro.AppRegistration.Api.GraphQL.DataLoaders;
 using Micro.AppRegistration.Api.GraphQL.Types;
 using Micro.GraphQL.Federation;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,8 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
             services.AddTransient<ISchema, AppRegistrationSchema>();
             services.AddTransient<ApplicationType>();
             services.AddTransient<UserType>();
+            services.AddTransient<ApplicationByIdLoader>();
+            services.AddTransient<ApplicationByOwnerLoader>();
 
             services.EnableFederation<EntityType>();
             services
