@@ -22,12 +22,18 @@ namespace Micro.AppRegistration.Storage
 
         public async Task<IEnumerable<Application>> ListApplicationsByOwner(string ownerId)
         {
-            return await _db.Applications.AsNoTracking().Where(x => x.User == ownerId).ToListAsync();
+            return (await _db.Applications.AsNoTracking().Where(x => x.User == ownerId).ToListAsync()).Select(RemoveSecret);
         }
 
         public async Task<Application> FindById(string id)
         {
-            return await _db.Applications.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return RemoveSecret(await _db.Applications.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id));
+        }
+
+        private static Application RemoveSecret(Application application)
+        {
+            application.Secret = null;
+            return application;
         }
     }
 }

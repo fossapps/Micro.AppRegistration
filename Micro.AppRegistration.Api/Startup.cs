@@ -1,3 +1,6 @@
+using GraphQL.Server.Ui.GraphiQL;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
 using Micro.AppRegistration.Api.Internal.Configs;
 using Micro.AppRegistration.Api.Internal.StartupExtensions;
 using Micro.Auth.Sdk;
@@ -28,7 +31,7 @@ namespace Micro.AppRegistration.Api
             services.ConfigureRequiredDependencies(Configuration);
             services.ConfigureHealthChecks();
             services.AddControllers();
-            services.ConfigureSwagger();
+            services.ConfigureGraphql();
             services.ConfigureAuthServices(new Config
             {
                 KeyStoreUrl = Configuration.GetSection("Services").Get<Services>().KeyStore.Url,
@@ -47,7 +50,7 @@ namespace Micro.AppRegistration.Api
             }
             app.UseRouting();
             app.SetupAuth();
-            app.AddSwaggerWithUi();
+            app.SetupGraphQl();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
