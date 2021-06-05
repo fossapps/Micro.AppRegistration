@@ -1,23 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="App.Metrics" Version="3.2.0-dev0002" />
-      <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="3.2.0-dev0002" />
-      <PackageReference Include="App.Metrics.Extensions.Configuration" Version="3.2.0-dev0002" />
-      <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="3.2.0-dev0002" />
+      <PackageReference Include="App.Metrics" Version="4.2.0" />
+      <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="4.2.0" />
+      <PackageReference Include="App.Metrics.Extensions.Configuration" Version="4.2.0" />
+      <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="4.2.0" />
       <PackageReference Include="Fossapps.Micro.KeyStore" Version="1.10.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.3" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0-preview8.19405.11" />
+      <PackageReference Include="Micro.Auth.Sdk" Version="2.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Logging.Slack" Version="1.1.0" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.0-preview8" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
       <None Include="./appsettings.ci.json" CopyToPublishDirectory="Always" />
       <PackageReference Include="PemUtils" Version="3.0.0.82" />
-      <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Micro.AppRegistration.Business\Micro.AppRegistration.Business.csproj" />
+      <ProjectReference Include="..\Micro.AppRegistration.Storage\Micro.AppRegistration.Storage.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Internal" />
     </ItemGroup>
 
     <Target Name="Install githooks" BeforeTargets="Build">

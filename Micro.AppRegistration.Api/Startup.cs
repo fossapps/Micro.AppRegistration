@@ -1,5 +1,6 @@
-using Micro.AppRegistration.Api.Configs;
-using Micro.AppRegistration.Api.StartupExtensions;
+using Micro.AppRegistration.Api.Internal.Configs;
+using Micro.AppRegistration.Api.Internal.StartupExtensions;
+using Micro.Auth.Sdk;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,8 +29,12 @@ namespace Micro.AppRegistration.Api
             services.ConfigureHealthChecks();
             services.AddControllers();
             services.ConfigureSwagger();
-            services.RegisterWorker();
-            services.ConfigureIdentityServices(Configuration);
+            services.ConfigureAuthServices(new Config
+            {
+                KeyStoreUrl = Configuration.GetSection("Services").Get<Services>().KeyStore.Url,
+                ValidIssuer = "my_app_auth",
+                ValidAudiences = new []{"my_app"}
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,8 +46,7 @@ namespace Micro.AppRegistration.Api
                 app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.SetupAuth();
             app.AddSwaggerWithUi();
             app.UseEndpoints(endpoints =>
             {
