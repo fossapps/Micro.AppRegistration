@@ -15,7 +15,7 @@ services:
     depends_on:
       - postgres
   auth:
-    image: fossapps/micro.auth:2.1.1
+    image: fossapps/micro.auth:2.1.2
     ports:
       - 25000:25000
     environment:

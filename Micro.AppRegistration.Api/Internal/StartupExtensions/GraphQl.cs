@@ -8,6 +8,8 @@ using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using Micro.AppRegistration.Api.GraphQL;
 using Micro.AppRegistration.Api.GraphQL.DataLoaders;
+using Micro.AppRegistration.Api.GraphQL.Directives;
+using Micro.AppRegistration.Api.GraphQL.Inputs;
 using Micro.AppRegistration.Api.GraphQL.Types;
 using Micro.GraphQL.Federation;
 using Microsoft.AspNetCore.Builder;
@@ -19,19 +21,23 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
     {
         public static void ConfigureGraphql(this IServiceCollection services)
         {
+            services.EnableFederation<EntityType>();
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddSingleton<IDocumentWriter, DocumentWriter>();
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
             services.AddSingleton<IDocumentExecutionListener, DataLoaderDocumentListener>();
 
             services.AddTransient<Query>();
+            services.AddTransient<Mutation>();
             services.AddTransient<ISchema, AppRegistrationSchema>();
             services.AddTransient<ApplicationType>();
             services.AddTransient<UserType>();
+            services.AddTransient<CreateApplicationInput>();
             services.AddTransient<ApplicationByIdLoader>();
             services.AddTransient<ApplicationByOwnerLoader>();
 
-            services.EnableFederation<EntityType>();
+            services.AddScoped<AuthorizeDirectiveVisitor>();
+
             services
                 .AddGraphQL(options =>
                 {

@@ -1,5 +1,6 @@
 using System;
 using Fossapps.Micro.KeyStore;
+using Micro.AppRegistration.Api.GraphQL.Directives;
 using Micro.AppRegistration.Api.Internal.Configs;
 using Micro.AppRegistration.Business.CreateApplication;
 using Micro.AppRegistration.Business.ListApplication;
@@ -16,6 +17,7 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
     {
         public static void ConfigureRequiredDependencies(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddHttpContextAccessor();
             services.AddDbContext<ApplicationContext>();
             services.AddSingleton<IUuidService, UuidService>();
             services.AddScoped<IAppRegistrationService, AppRegistrationService>();
