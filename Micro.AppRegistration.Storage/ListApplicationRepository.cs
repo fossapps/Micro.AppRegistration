@@ -9,6 +9,7 @@ namespace Micro.AppRegistration.Storage
     {
         public Task<IEnumerable<Application>> ListApplicationsByOwners(IEnumerable<string> ownerIds);
         public Task<IEnumerable<Application>> FindByIds(IEnumerable<string> ids);
+        public Task<Application> FindById(string id);
     }
 
     public class ListApplicationRepository : IListApplicationRepository
@@ -28,6 +29,11 @@ namespace Micro.AppRegistration.Storage
         public async Task<IEnumerable<Application>> FindByIds(IEnumerable<string> ids)
         {
             return await _db.Applications.AsNoTracking().Where(x => ids.Contains(x.Id)).ToListAsync();
+        }
+
+        public async Task<Application> FindById(string id)
+        {
+            return await _db.Applications.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
