@@ -22,10 +22,13 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
                 {
                     return;
                 }
+
                 logger.LogWarning("Connection failed...");
             }
+
             throw new RetryLimitExceededException("Couldn't connect to database");
         }
+
         private static async Task<bool> TryMigrate(DatabaseFacade db)
         {
             try
@@ -35,6 +38,7 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
                 {
                     return false;
                 }
+
                 await db.MigrateAsync();
                 return true;
             }

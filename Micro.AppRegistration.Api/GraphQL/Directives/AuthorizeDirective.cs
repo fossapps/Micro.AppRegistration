@@ -21,9 +21,11 @@ namespace Micro.AppRegistration.Api.GraphQL.Directives
         {
         }
     }
+
     public class AuthorizeDirectiveVisitor : BaseSchemaNodeVisitor
     {
         private readonly IHttpContextAccessor _contextAccessor;
+
         public AuthorizeDirectiveVisitor(IHttpContextAccessor contextAccessor)
         {
             _contextAccessor = contextAccessor;
@@ -43,10 +45,7 @@ namespace Micro.AppRegistration.Api.GraphQL.Directives
                 return;
             }
 
-            field.Resolver = new AsyncFieldResolver<object>(async context =>
-            {
-                throw new NotAuthorizedException();
-            });
+            field.Resolver = new AsyncFieldResolver<object>(async context => { throw new NotAuthorizedException(); });
         }
     }
 }

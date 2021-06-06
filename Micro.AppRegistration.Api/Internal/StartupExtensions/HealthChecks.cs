@@ -21,6 +21,7 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
                 .AddCheck<ConnectionToDbCheck>(nameof(ConnectionToDbCheck))
                 .AddCheck<MemoryCheck>(nameof(MemoryCheck));
         }
+
         public static void ConfigureHealthCheckEndpoint(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapHealthChecks("/health", new HealthCheckOptions
@@ -45,7 +46,5 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
             return httpContext.Response.WriteAsync(
                 json.ToString(Formatting.Indented));
         }
-
-
     }
 }

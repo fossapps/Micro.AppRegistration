@@ -15,6 +15,7 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
             {
                 return;
             }
+
             loggerFactory.AddSlack(new SlackConfiguration
             {
                 MinLevel = slackConfig.MinLogLevel,

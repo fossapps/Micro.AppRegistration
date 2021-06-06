@@ -14,12 +14,15 @@ namespace Micro.AppRegistration.Api.Internal.HealthCheck
             _db = db;
         }
 
-        public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context,
+            CancellationToken cancellationToken = new CancellationToken())
         {
             try
             {
                 var canConnect = await _db.Database.CanConnectAsync(cancellationToken);
-                return canConnect ? new HealthCheckResult(HealthStatus.Healthy, "Database can connect") : new HealthCheckResult(HealthStatus.Unhealthy, "database can't connect");
+                return canConnect
+                    ? new HealthCheckResult(HealthStatus.Healthy, "Database can connect")
+                    : new HealthCheckResult(HealthStatus.Unhealthy, "database can't connect");
             }
             catch
             {

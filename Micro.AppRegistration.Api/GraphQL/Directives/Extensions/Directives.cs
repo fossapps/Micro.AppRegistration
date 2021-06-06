@@ -10,7 +10,9 @@ namespace Micro.AppRegistration.Api.GraphQL.Directives.Extensions
         {
             return type.ApplyDirective(AuthorizeDirective.DirectiveName);
         }
-        public static FieldBuilder<TSourceType, TReturnType> Authorize<TSourceType, TReturnType>(this FieldBuilder<TSourceType, TReturnType> type)
+
+        public static FieldBuilder<TSourceType, TReturnType> Authorize<TSourceType, TReturnType>(
+            this FieldBuilder<TSourceType, TReturnType> type)
         {
             return type.Directive(AuthorizeDirective.DirectiveName);
         }

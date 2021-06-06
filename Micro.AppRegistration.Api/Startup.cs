@@ -36,18 +36,20 @@ namespace Micro.AppRegistration.Api
             {
                 KeyStoreUrl = Configuration.GetSection("Services").Get<Services>().KeyStore.Url,
                 ValidIssuer = "my_app_auth",
-                ValidAudiences = new []{"my_app"}
+                ValidAudiences = new[] {"my_app"}
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IOptions<SlackLoggingConfig> slackConfig)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,
+            IOptions<SlackLoggingConfig> slackConfig)
         {
             loggerFactory.ConfigureLoggerWithSlack(slackConfig.Value, env);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRouting();
             app.SetupAuth();
             app.SetupGraphQl();

@@ -26,7 +26,8 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
             services.AddScoped<IListApplicationService, ListApplicationsService>();
             services.AddScoped<IVerifySecretService, VerifySecretService>();
             services.AddSingleton<IPasswordHasher<Application>, PasswordHasher<Application>>();
-            services.AddSingleton(SetupKeyStoreHttpClient(configuration.GetSection("Services").Get<Services>().KeyStore));
+            services.AddSingleton(
+                SetupKeyStoreHttpClient(configuration.GetSection("Services").Get<Services>().KeyStore));
         }
 
         private static IKeyStoreClient SetupKeyStoreHttpClient(KeyStoreConfig config)

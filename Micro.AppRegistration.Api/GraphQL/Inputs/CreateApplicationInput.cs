@@ -6,7 +6,7 @@ namespace Micro.AppRegistration.Api.GraphQL.Inputs
     {
         public static QueryArgument BuildArgument()
         {
-            return new QueryArgument<NonNullGraphType<CreateApplicationInput>> { Name = "input"};
+            return new QueryArgument<NonNullGraphType<CreateApplicationInput>> {Name = "input"};
         }
 
         public CreateApplicationInput()

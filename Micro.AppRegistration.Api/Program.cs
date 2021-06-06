@@ -33,6 +33,7 @@ namespace Micro.AppRegistration.Api
                 Environment.ExitCode = 1;
                 return;
             }
+
             host.Run();
         }
 
@@ -41,15 +42,15 @@ namespace Micro.AppRegistration.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureMetricsWithDefaults((context, builder) =>
+                    {
+                        builder.Configuration.ReadFrom(context.Configuration);
+                        builder.Report.ToInfluxDb(options =>
                         {
-                            builder.Configuration.ReadFrom(context.Configuration);
-                            builder.Report.ToInfluxDb(options =>
-                            {
-                                options.FlushInterval = TimeSpan.FromSeconds(5);
-                                context.Configuration.GetSection("MetricsOptions").Bind(options);
-                                options.MetricsOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
-                            });
+                            options.FlushInterval = TimeSpan.FromSeconds(5);
+                            context.Configuration.GetSection("MetricsOptions").Bind(options);
+                            options.MetricsOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
                         });
+                    });
                     webBuilder.UseMetrics();
                     webBuilder.UseStartup<Startup>();
                 });

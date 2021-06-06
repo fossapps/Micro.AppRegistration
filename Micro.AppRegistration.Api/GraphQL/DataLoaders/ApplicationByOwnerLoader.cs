@@ -17,7 +17,8 @@ namespace Micro.AppRegistration.Api.GraphQL.DataLoaders
             _applicationService = applicationService;
         }
 
-        protected override async Task FetchAsync(IEnumerable<DataLoaderPair<string, IEnumerable<Application>>> list, CancellationToken cancellationToken)
+        protected override async Task FetchAsync(IEnumerable<DataLoaderPair<string, IEnumerable<Application>>> list,
+            CancellationToken cancellationToken)
         {
             var users = list.Select(x => x.Key);
             var applications = await _applicationService.FindByOwnerIds(users);
