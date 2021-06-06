@@ -9,6 +9,15 @@ namespace Micro.AppRegistration.Business.ListApplication
     {
         Task<Dictionary<string, Application>> FindByIds(IEnumerable<string> ids);
         Task<ILookup<string, Application>> FindByOwnerIds(IEnumerable<string> ids);
+        Task<Application> VerifyOwnership(Application application, string userId)
+        {
+            if (application.User != userId)
+            {
+                throw new UnauthorizedException();
+            }
+
+            return Task.FromResult(application);
+        }
     }
     public class ListApplicationsService : IListApplicationService
     {

@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Micro.AppRegistration.Storage;
 using Microsoft.AspNetCore.Identity;
