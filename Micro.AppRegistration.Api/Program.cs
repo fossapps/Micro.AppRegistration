@@ -4,8 +4,8 @@ using App.Metrics;
 using App.Metrics.AspNetCore;
 using App.Metrics.Extensions.Configuration;
 using App.Metrics.Formatters.InfluxDB;
-using Micro.AppRegistration.Api.Models;
-using Micro.AppRegistration.Api.StartupExtensions;
+using Micro.AppRegistration.Api.Internal.StartupExtensions;
+using Micro.AppRegistration.Storage;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +33,7 @@ namespace Micro.AppRegistration.Api
                 Environment.ExitCode = 1;
                 return;
             }
+
             host.Run();
         }
 
@@ -41,15 +42,15 @@ namespace Micro.AppRegistration.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureMetricsWithDefaults((context, builder) =>
+                    {
+                        builder.Configuration.ReadFrom(context.Configuration);
+                        builder.Report.ToInfluxDb(options =>
                         {
-                            builder.Configuration.ReadFrom(context.Configuration);
-                            builder.Report.ToInfluxDb(options =>
-                            {
-                                options.FlushInterval = TimeSpan.FromSeconds(5);
-                                context.Configuration.GetSection("MetricsOptions").Bind(options);
-                                options.MetricsOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
-                            });
+                            options.FlushInterval = TimeSpan.FromSeconds(5);
+                            context.Configuration.GetSection("MetricsOptions").Bind(options);
+                            options.MetricsOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
                         });
+                    });
                     webBuilder.UseMetrics();
                     webBuilder.UseStartup<Startup>();
                 });

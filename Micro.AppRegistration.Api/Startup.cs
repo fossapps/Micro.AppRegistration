@@ -1,5 +1,9 @@
-using Micro.AppRegistration.Api.Configs;
-using Micro.AppRegistration.Api.StartupExtensions;
+using GraphQL.Server.Ui.GraphiQL;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
+using Micro.AppRegistration.Api.Internal.Configs;
+using Micro.AppRegistration.Api.Internal.StartupExtensions;
+using Micro.Auth.Sdk;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,23 +31,28 @@ namespace Micro.AppRegistration.Api
             services.ConfigureRequiredDependencies(Configuration);
             services.ConfigureHealthChecks();
             services.AddControllers();
-            services.ConfigureSwagger();
-            services.RegisterWorker();
-            services.ConfigureIdentityServices(Configuration);
+            services.ConfigureGraphql();
+            services.ConfigureAuthServices(new Config
+            {
+                KeyStoreUrl = Configuration.GetSection("Services").Get<Services>().KeyStore.Url,
+                ValidIssuer = "my_app_auth",
+                ValidAudiences = new[] {"my_app"}
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IOptions<SlackLoggingConfig> slackConfig)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,
+            IOptions<SlackLoggingConfig> slackConfig)
         {
             loggerFactory.ConfigureLoggerWithSlack(slackConfig.Value, env);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.AddSwaggerWithUi();
+            app.SetupAuth();
+            app.SetupGraphQl();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
