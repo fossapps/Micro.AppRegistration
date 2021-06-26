@@ -37,6 +37,7 @@ namespace Micro.AppRegistration.Api.Internal.StartupExtensions
             services.AddTransient<ApplicationByOwnerLoader>();
 
             services.AddScoped<AuthorizeDirectiveVisitor>();
+            services.AddScoped<RequirePermissionDirectiveVisitor>();
 
             services
                 .AddGraphQL(options =>
