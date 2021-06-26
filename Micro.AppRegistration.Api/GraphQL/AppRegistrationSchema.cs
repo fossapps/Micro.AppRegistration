@@ -12,7 +12,9 @@ namespace Micro.AppRegistration.Api.GraphQL
             Query = query;
             Mutation = mutation;
             Directives.Register(new AuthorizeDirective());
+            Directives.Register(new RequirePermissionDirective());
             RegisterVisitor(typeof(AuthorizeDirectiveVisitor));
+            RegisterVisitor(typeof(RequirePermissionDirectiveVisitor));
         }
     }
 }
